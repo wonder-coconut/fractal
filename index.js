@@ -1,8 +1,7 @@
 const canvas = document.querySelector('canvas');
-const generateBtn = document.getElementById('generate');
+const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
-const ctx = canvas.getContext('2d');
 
 function drawTree(x,y,angle,length,width,color1,color2)
 {
@@ -31,4 +30,4 @@ function drawLine(x,y,angleDeg,length,width,color1,color2,)
     return {x: x + length * Math.cos(angleDeg * Math.PI/180),y: y - length * Math.sin(angleDeg * Math.PI/180)};
 }
 
-drawTree(canvas.width/2,canvas.height - 100, 90, 250, 10, 'white', 'white');
+drawTree(canvas.width/2,canvas.height - 80, 90, 100, 10, 'white', 'white');

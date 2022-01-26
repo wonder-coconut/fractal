@@ -9,13 +9,28 @@ const randomize = document.getElementById('randomize');
 const color1='white';
 const color2='white';
 
-
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
+render.addEventListener('click', () =>
+{
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    drawTree(canvas.width/2,canvas.height - 80, 90, parseInt(angle.value), 100, 10);
+});
+
+randomize.addEventListener('click', () => 
+{
+    const angleVal = Math.round(Math.random()*360);
+    const branchVal = Math.round(Math.random()*10);
+    angle.value = angleVal;
+    branches.value = branchVal;
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    drawTree(canvas.width/2,canvas.height - 80, 90, parseInt(angle.value), 100, 10);
+});
+
 function drawTree(x,y,angle,angleDelta,length,width)
 {
-    console.log(length);
+    //console.log(length);
     if(length < 10) return;
     const start = drawLine(x,y,angle,length,width,color1,color2);
     
@@ -40,4 +55,4 @@ function drawLine(x,y,angleDeg,length,width,color1,color2,)
     return {x: x + length * Math.cos(angleDeg * Math.PI/180),y: y - length * Math.sin(angleDeg * Math.PI/180)};
 }
 
-drawTree(canvas.width/2,canvas.height - 80, 90, angle.value, 100, 10);
+//TODO branches and original line off

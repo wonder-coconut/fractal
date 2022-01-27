@@ -9,13 +9,21 @@ const randomize = document.getElementById('randomize');
 const color1='white';
 const color2='white';
 
+let start;
+
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
+
+
+initialLine.addEventListener('change', () => 
+{
+    console.log(initialLine.checked);
+});
 
 render.addEventListener('click', () =>
 {
     ctx.clearRect(0,0,canvas.width,canvas.height);
-    drawTree(canvas.width/2,canvas.height - 80, 90, parseInt(angle.value), 100, 10);
+    drawTree(canvas.width/2,canvas.height/2, 90, parseInt(angle.value), 100, 10,1);
 });
 
 randomize.addEventListener('click', () => 
@@ -25,17 +33,22 @@ randomize.addEventListener('click', () =>
     angle.value = angleVal;
     branches.value = branchVal;
     ctx.clearRect(0,0,canvas.width,canvas.height);
-    drawTree(canvas.width/2,canvas.height - 80, 90, parseInt(angle.value), 100, 10);
+    drawTree(canvas.width/2,canvas.height/2, 90, parseInt(angle.value), 100, 10,1);
 });
 
-function drawTree(x,y,angle,angleDelta,length,width)
+function drawTree(x,y,angle,angleDelta,length,width,counter)
 {
-    //console.log(length);
     if(length < 10) return;
-    const start = drawLine(x,y,angle,length,width,color1,color2);
     
-    drawTree(start.x, start.y,angle + angleDelta, angleDelta, length * 0.75, width * 0.75);
-    drawTree(start.x, start.y,angle - angleDelta, angleDelta, length * 0.75, width * 0.75);
+    let start;
+    if(counter == 1 && !initialLine.checked)
+        start = {x: x,y: y};
+    else
+        start = drawLine(x,y,angle,length,width,color1,color2);
+    
+    console.log(length + ', '+start+', '+counter);   
+    drawTree(start.x, start.y,angle + angleDelta, angleDelta, length * 0.75, width * 0.75, ++counter);
+    drawTree(start.x, start.y,angle - angleDelta, angleDelta, length * 0.75, width * 0.75, ++counter);
 }
 
 function drawLine(x,y,angleDeg,length,width,color1,color2,)
@@ -55,4 +68,4 @@ function drawLine(x,y,angleDeg,length,width,color1,color2,)
     return {x: x + length * Math.cos(angleDeg * Math.PI/180),y: y - length * Math.sin(angleDeg * Math.PI/180)};
 }
 
-//TODO branches and original line off
+//TODO branches

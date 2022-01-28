@@ -33,10 +33,10 @@ randomize.addEventListener('click', () =>
     branches.value = Math.round(Math.random()*5) + 1;
     angle.value = Math.round(Math.random()*360);
     angleDelta.value = Math.round(Math.random()*360);
-    len.value = Math.round(Math.random()*390) + 10;
+    len.value = Math.round(Math.random()*190) + 10;
     width.value = Math.round(Math.random()*39) + 1;
-    lenChange.value = Math.round(Math.random()*100);
-    widthChange.value = Math.round(Math.random()*100);
+    lenChange.value = Math.round(Math.random()*75);
+    widthChange.value = Math.round(Math.random()*75);//capped at 75 to avoid stack overflow
     initialLine.checked = Math.round(Math.random());
     ctx.clearRect(0,0,canvas.width,canvas.height);
     drawTree(canvas.width/2,canvas.height/2, 90, 100, 10,1);

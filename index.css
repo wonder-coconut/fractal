@@ -43,7 +43,7 @@
     padding: 2px;
 }
 
-.parameters > #branches,#angle,#width-percent,#length-percent
+.parameters > #branches,#angle,#angle-delta,#length,#width,#width-percent,#length-percent
 {
     width: 100%;
 }

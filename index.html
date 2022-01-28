@@ -15,17 +15,26 @@
             <label for="branches">Number of branches: </label>
             <input type="number" id="branches" value="2">
             <br>
-            <label for="angle">Angle(degree): </label>
-            <input type="number" id="angle" value="30">
+            <label for="angle">Initial angle(deg): </label>
+            <input type="number" id="angle" value="90">
             <br>
-            <label for="width-percent">Width reduction %</label>
-            <input type="number" id="width-percent" max="100" min="0" value="75">
+            <label for="angle-delta">Angle change(deg):</label>
+            <input type="number" id="angle-delta" value="30">
+            <br>
+            <label for="length">Initial length(px):</label>
+            <input type="number" id="length" value="100">
+            <br>
+            <label for="width">Initial width(px):</label>
+            <input type="number" id="width" value="10">
             <br>
             <label for="length-percent">Length reduction %</label>
             <input type="number" id="length-percent" max="100" min="0" value="75">
             <br>
+            <label for="width-percent">Width reduction %</label>
+            <input type="number" id="width-percent" max="100" min="0" value="75">
+            <br>
             <label for="initial-line">Initial line: </label>
-            <input type="checkbox" id="initial-line">
+            <input type="checkbox" id="initial-line" checked="true">
             <br>
             <button type="button" id="render">Render</button>
             <br>

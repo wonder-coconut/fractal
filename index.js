@@ -8,8 +8,8 @@ const width = document.getElementById('width');
 const lenChange = document.getElementById('length-percent');
 const widthChange = document.getElementById('width-percent');
 const initialLine = document.getElementById('initial-line');
-const render = document.getElementById('render');
-const randomize = document.getElementById('randomize');
+const renderBtn = document.getElementById('render');
+const randomizeBtn = document.getElementById('randomize');
 
 const color1='white';
 const color2='white';
@@ -19,16 +19,15 @@ let start;//object with x and y coordinates
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-render.addEventListener('click', () =>
+document.addEventListener('keydown', (e) => 
 {
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    if((widthChange.value <= 100 && widthChange.value >= 0) && (lenChange.value <=100 && lenChange.value >= 0))//percentage constraints
-        drawTree(canvas.width/2,canvas.height - 250, parseInt(angle.value), parseInt(len.value), parseInt(width.value),1);
-    else
-        console.log('out of bounds');
+    if(e.keyCode === 13)
+        render();
 });
 
-randomize.addEventListener('click', () => 
+renderBtn.addEventListener('click', render);
+
+randomizeBtn.addEventListener('click', () => 
 {
     branches.value = Math.round(Math.random()*5) + 1;
     angle.value = Math.round(Math.random()*360);
@@ -42,6 +41,15 @@ randomize.addEventListener('click', () =>
     drawTree(canvas.width/2,canvas.height/2, 90, 100, 10,1);
 });
 
+function render()
+{
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    if((widthChange.value <= 100 && widthChange.value >= 0) && (lenChange.value <=100 && lenChange.value >= 0))//percentage constraints
+        drawTree(canvas.width/2,canvas.height - 250, parseInt(angle.value), parseInt(len.value), parseInt(width.value),1);
+    else
+        console.log('out of bounds');
+}
+
 function drawTree(x,y,angle,len,width,counter)
 {
     if(len < 10) return;
@@ -52,7 +60,7 @@ function drawTree(x,y,angle,len,width,counter)
     else
         start = drawLine(x,y,angle,len,width,color1,color2);
     
-    console.log(len + ', '+start+', '+counter);
+    //console.log(len + ', '+start+', '+counter);
     len = len * parseInt(lenChange.value)/100;
     width = width * parseInt(widthChange.value)/100;
 

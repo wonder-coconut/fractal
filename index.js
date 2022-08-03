@@ -10,8 +10,8 @@ const widthChange = document.getElementById('width-percent');
 const initialLine = document.getElementById('initial-line');
 const renderBtn = document.getElementById('render');
 const randomizeBtn = document.getElementById('randomize');
-const animateBtn = document.getElementById('animate');
-const animateClrBtn = document.getElementById('animeteColour');
+const animateShapeBtn = document.getElementById('animateShape');
+const animateClrBtn = document.getElementById('animateColour');
 
 const angleIncrement = 0.25;
 const timeInterval = 100;
@@ -36,7 +36,9 @@ document.addEventListener('keydown', (e) =>
 
 renderBtn.addEventListener('click', render);
 
-animateBtn.addEventListener('click', animate);
+animateShapeBtn.addEventListener('click', animateShape);
+
+animateClrBtn.addEventListener('click', animateColour);
 
 randomizeBtn.addEventListener('click', () => 
 {
@@ -61,15 +63,49 @@ function render()
         console.log('out of bounds');
 }
 
-function animate()
+function animateShape()
 {
+    const angleTimeInterval = timeInterval;
     for (let angle = 0; angle <= 360; angle += angleIncrement)
     {
         setTimeout(() => {
             console.log(angle);
             angleDelta.value = angle;
             render();
-        }, timeInterval*(angle + 1));
+        }, timeInterval*(angle));
+    }
+}
+
+function animateColour()
+{
+    red = 255;
+    blue = green = 0;
+
+    const range = 256*6;
+    const colourIncrement = range/360.0 * angleIncrement;
+    const colourTimeInterval = timeInterval/range * 360;
+
+    for (let i = 0; i < range; i += colourIncrement)
+    {
+        setTimeout(() => {
+            if(i < 256)
+                blue = i;
+            else if(i >= 256 & i < 512)
+                red = 512 - i;
+            else if(i >= 512 & i < 768)
+                green = i - 512;
+            else if(i >= 768 & i < 1024)
+                blue = 1024 - i;
+            else if(i >= 1024 & i < 1280)
+                red = i - 1024;
+            else if(i >= 1280 & i < 1536)
+                green = 1536 - i;
+            
+            color1 = color2 = 'rgb(' + red + ',' + green + ',' + blue + ',' + alpha + ')';
+            console.log(color1);
+            console.log("i - " + i);
+            render();
+        }, colourTimeInterval * i);
     }
 }
 

@@ -12,6 +12,7 @@ const renderBtn = document.getElementById('render');
 const randomizeBtn = document.getElementById('randomize');
 const animateShapeBtn = document.getElementById('animateShape');
 const animateClrBtn = document.getElementById('animateColour');
+const animateBtn = document.getElementById('animate');
 
 const angleIncrement = 0.25;
 const timeInterval = 100;
@@ -39,6 +40,8 @@ renderBtn.addEventListener('click', render);
 animateShapeBtn.addEventListener('click', animateShape);
 
 animateClrBtn.addEventListener('click', animateColour);
+
+animateBtn.addEventListener('click', animate);
 
 randomizeBtn.addEventListener('click', () => 
 {
@@ -104,6 +107,39 @@ function animateColour()
             color1 = color2 = 'rgb(' + red + ',' + green + ',' + blue + ',' + alpha + ')';
             console.log(color1);
             console.log("i - " + i);
+            render();
+        }, colourTimeInterval * i);
+    }
+}
+
+function animate()
+{
+    red = 255;
+    blue = green = 0;
+
+    const range = 256*6;
+    const colourIncrement = range/360.0 * angleIncrement;
+    const colourTimeInterval = timeInterval/range * 360;
+
+    for (let i = 0; i < range; i += colourIncrement)
+    {
+        setTimeout(() => {
+            if(i < 256)
+                blue = i;
+            else if(i >= 256 & i < 512)
+                red = 512 - i;
+            else if(i >= 512 & i < 768)
+                green = i - 512;
+            else if(i >= 768 & i < 1024)
+                blue = 1024 - i;
+            else if(i >= 1024 & i < 1280)
+                red = i - 1024;
+            else if(i >= 1280 & i < 1536)
+                green = 1536 - i;
+            
+            angleDelta.value = i/range * 360.0;
+
+            color1 = color2 = 'rgb(' + red + ',' + green + ',' + blue + ',' + alpha + ')';
             render();
         }, colourTimeInterval * i);
     }

@@ -14,8 +14,8 @@ const animateShapeBtn = document.getElementById('animateShape');
 const animateClrBtn = document.getElementById('animateColour');
 const animateBtn = document.getElementById('animate');
 
-const angleIncrement = 1;
-const timeInterval = 100;
+const angleIncrement = parseFloat(document.getElementById('increment').value);
+const timeInterval = parseFloat(document.getElementById('timeInterval').value);
 
 let red,green,blue,alpha;
 red = green = blue = 255;
@@ -182,3 +182,5 @@ function drawLine(x,y,angleDeg,len,width,color1,color2,)
 
     return {x: x + len * Math.cos(angleDeg * Math.PI/180),y: y - len * Math.sin(angleDeg * Math.PI/180)};
 }
+
+//TODO branches

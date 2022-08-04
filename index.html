@@ -27,10 +27,10 @@
             <label for="width">Initial width(px):</label>
             <input type="number" id="width" value="10">
             <br>
-            <label for="length-percent">Length reduction %</label>
+            <label for="length-percent">Length reduction (% of original)</label>
             <input type="number" id="length-percent" max="100" min="0" value="70">
             <br>
-            <label for="width-percent">Width reduction %</label>
+            <label for="width-percent">Width reduction (% of original)</label>
             <input type="number" id="width-percent" max="100" min="0" value="50">
             <br>
             <label for="initial-line">Initial line: </label>
@@ -40,6 +40,13 @@
             <br>
             <br>
             <button type="button" id="randomize">Randomize</button>
+            <br>
+            <br>
+            <label for="timeInterval">Time between animation renders(ms):</label>
+            <input type="number" id="timeInterval" min="25" value="100">
+            <br>
+            <label for="increment">Increment factor:</label>
+            <input type="number" id="increment" min="0.125" value="0.5">
             <br>
             <br>
             <button type="button" id="animateShape">Animate Shape</button>

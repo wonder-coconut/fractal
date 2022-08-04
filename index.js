@@ -14,7 +14,7 @@ const animateShapeBtn = document.getElementById('animateShape');
 const animateClrBtn = document.getElementById('animateColour');
 const animateBtn = document.getElementById('animate');
 
-const angleIncrement = 0.25;
+const angleIncrement = 1;
 const timeInterval = 100;
 
 let red,green,blue,alpha;
@@ -54,14 +54,14 @@ randomizeBtn.addEventListener('click', () =>
     widthChange.value = Math.round(Math.random()*75);//capped at 75 to avoid stack overflow
     initialLine.checked = Math.round(Math.random());
     ctx.clearRect(0,0,canvas.width,canvas.height);
-    drawTree(canvas.width/2,canvas.height/2, 90, 100, 10,1);
+    drawTree(canvas.width/2,canvas.height/2, 90, 100, 10,0);
 });
 
 function render()
 {
     ctx.clearRect(0,0,canvas.width,canvas.height);
     if((widthChange.value <= 100 && widthChange.value >= 0) && (lenChange.value <=100 && lenChange.value >= 0))//percentage constraints
-        drawTree(canvas.width/2, 3*canvas.height/4, parseFloat(angle.value), parseInt(len.value), parseInt(width.value),1);
+        drawTree(canvas.width/2, 3*canvas.height/4, parseFloat(angle.value), parseInt(len.value), parseInt(width.value),0);
     else
         console.log('out of bounds');
 }
@@ -72,7 +72,6 @@ function animateShape()
     for (let angle = 0; angle <= 360; angle += angleIncrement)
     {
         setTimeout(() => {
-            console.log(angle);
             angleDelta.value = angle;
             render();
         }, timeInterval*(angle));
@@ -105,8 +104,6 @@ function animateColour()
                 green = 1536 - i;
             
             color1 = color2 = 'rgb(' + red + ',' + green + ',' + blue + ',' + alpha + ')';
-            console.log(color1);
-            console.log("i - " + i);
             render();
         }, colourTimeInterval * i);
     }
@@ -147,6 +144,7 @@ function animate()
 
 function drawTree(x,y,angle,len,width,counter)
 {
+    counter ++;
     if(len < 10) return;
     
     let start;
@@ -159,8 +157,13 @@ function drawTree(x,y,angle,len,width,counter)
     len = len * parseInt(lenChange.value)/100;
     width = width * parseInt(widthChange.value)/100;
 
-    drawTree(start.x, start.y,angle + parseFloat(angleDelta.value),len,width,++counter);
-    drawTree(start.x, start.y,angle - parseFloat(angleDelta.value),len,width,++counter);
+    let initialAngle = angle - (parseFloat(branches.value) - 1) * parseFloat(angleDelta.value) / 2;
+    for(let i = 0; i < branches.value ; i++)
+    {
+        drawTree(start.x, start.y, initialAngle + i * angleDelta.value, len, width, counter);
+    }
+    /*drawTree(start.x, start.y,angle + parseFloat(angleDelta.value),len,width,++counter);
+    drawTree(start.x, start.y,angle - parseFloat(angleDelta.value),len,width,++counter);*/
 }
 
 function drawLine(x,y,angleDeg,len,width,color1,color2,)
@@ -179,5 +182,3 @@ function drawLine(x,y,angleDeg,len,width,color1,color2,)
 
     return {x: x + len * Math.cos(angleDeg * Math.PI/180),y: y - len * Math.sin(angleDeg * Math.PI/180)};
 }
-
-//TODO branches

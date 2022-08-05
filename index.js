@@ -13,9 +13,10 @@ const randomizeBtn = document.getElementById('randomize');
 const animateShapeBtn = document.getElementById('animateShape');
 const animateClrBtn = document.getElementById('animateColour');
 const animateBtn = document.getElementById('animate');
+const colourInput = document.getElementById('colour');
 
-const angleIncrement = parseFloat(document.getElementById('increment').value);
-const timeInterval = parseFloat(document.getElementById('timeInterval').value);
+const angleIncrement = 0.25;
+const timeInterval = 100;
 
 let red,green,blue,alpha;
 red = green = blue = 255;
@@ -35,7 +36,7 @@ document.addEventListener('keydown', (e) =>
         render();
 });
 
-renderBtn.addEventListener('click', render);
+renderBtn.addEventListener('click', renderInit);
 
 animateShapeBtn.addEventListener('click', animateShape);
 
@@ -57,11 +58,34 @@ randomizeBtn.addEventListener('click', () =>
     drawTree(canvas.width/2,canvas.height/2, 90, 100, 10,0);
 });
 
-function render()
+function renderInit()
 {
+    render(colourInput.value);
+}
+
+function rgbToHex(col)
+{
+    if(col.charAt(0)=='r')
+    {
+        col=col.replace('rgb(','').replace(')','').split(',');
+        var r=parseInt(col[0], 10).toString(16);
+        var g=parseInt(col[1], 10).toString(16);
+        var b=parseInt(col[2], 10).toString(16);
+        r=r.length==1?'0'+r:r; g=g.length==1?'0'+g:g; b=b.length==1?'0'+b:b;
+        var colHex='#'+r+g+b;
+        return colHex;
+    }
+}
+
+function render(colour)
+{
+    color1 = color2 = colour;
     ctx.clearRect(0,0,canvas.width,canvas.height);
     if((widthChange.value <= 100 && widthChange.value >= 0) && (lenChange.value <=100 && lenChange.value >= 0))//percentage constraints
-        drawTree(canvas.width/2, 3*canvas.height/4, parseFloat(angle.value), parseInt(len.value), parseInt(width.value),0);
+        if(initialLine.checked == 1)
+            drawTree(canvas.width/2, 3*canvas.height/4, parseFloat(angle.value), parseInt(len.value), parseInt(width.value),0);
+        else
+            drawTree(canvas.width/2, canvas.height/2, parseFloat(angle.value), parseInt(len.value), parseInt(width.value),0);
     else
         console.log('out of bounds');
 }
@@ -102,9 +126,7 @@ function animateColour()
                 red = i - 1024;
             else if(i >= 1280 & i < 1536)
                 green = 1536 - i;
-            
-            color1 = color2 = 'rgb(' + red + ',' + green + ',' + blue + ',' + alpha + ')';
-            render();
+            render(rgbToHex('rgb(' + red + ',' + green + ',' + blue + ',' + alpha + ')'));
         }, colourTimeInterval * i);
     }
 }
@@ -136,8 +158,7 @@ function animate()
             
             angleDelta.value = i/range * 360.0;
 
-            color1 = color2 = 'rgb(' + red + ',' + green + ',' + blue + ',' + alpha + ')';
-            render();
+            render('rgb(' + red + ',' + green + ',' + blue + ',' + alpha + ')');
         }, colourTimeInterval * i);
     }
 }

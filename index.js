@@ -33,7 +33,7 @@ canvas.height = window.innerHeight;
 document.addEventListener('keydown', (e) => 
 {
     if(e.keyCode === 13)
-        render();
+        render(colourInput.value);
 });
 
 renderBtn.addEventListener('click', renderInit);
@@ -97,7 +97,7 @@ function animateShape()
     {
         setTimeout(() => {
             angleDelta.value = angle;
-            render();
+            render(colourInput.value);
         }, timeInterval*(angle));
     }
 }
